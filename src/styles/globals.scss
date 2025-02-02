@@ -1,4 +1,4 @@
-@use './variables.scss';
+@use './variables.scss' as *;
 @use './reset.scss';
 body {
 	// background-color: #d8d2d2;
@@ -9,4 +9,26 @@ body {
 .container {
 	max-width: 1208px;
 	margin: 0 auto;
+}
+.custom-pagination {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.swiper-pagination-bullet {
+	width: 12px;
+	height: 12px;
+	background-color: $dots;
+	border-radius: 50%;
+	opacity: 0.5;
+	transition: opacity 0.3s ease, transform 0.3s ease;
+	cursor: pointer;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+	background-color: $dots-active;
+	opacity: 1;
+	transform: scale(1.3);
 }

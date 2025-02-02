@@ -19,8 +19,6 @@ export default function MySwiper() {
 					clickable: true,
 					el: 'custom-pagination',
 				}}
-				onSwiper={swiper => console.log(swiper)}
-				onSlideChange={() => console.log('slide change')}
 			>
 				{bannerSlides.map(slide => (
 					<SwiperSlide key={slide.id}>

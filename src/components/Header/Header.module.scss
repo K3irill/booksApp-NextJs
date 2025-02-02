@@ -1,0 +1,82 @@
+@use '../../styles/variables.scss' as *;
+
+.header {
+	&__content {
+		height: 116px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0px 15px;
+	}
+	&__logo {
+		font-size: 24px;
+		font-weight: 900;
+	}
+	&__nav {
+		@media (max-width: 1023px) {
+			display: none;
+		}
+	}
+	&__nav-list {
+		display: flex;
+		align-items: flex-end;
+		gap: 40px;
+		margin: 0 10px;
+	}
+	&__nav-item {
+	}
+	&__nav-link {
+		color: $text-grey;
+		font-size: 16px;
+		text-wrap: nowrap;
+
+		&--active {
+			color: $text-light-black;
+			font-weight: 700;
+		}
+	}
+	&__activity {
+		display: flex;
+		width: 119px;
+		justify-content: space-between;
+		@media (max-width: 1023px) {
+			display: none;
+		}
+	}
+	&__burger {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+		width: 30px;
+		height: 30px;
+		span {
+			transition: all 0.4s;
+			display: block;
+			width: 100%;
+			height: 2px;
+			background: $text-grey;
+		}
+		@media (min-width: 1024px) {
+			display: none;
+		}
+
+		&--open {
+			span {
+				&:nth-child(1) {
+					transform-origin: top left;
+					transform: rotate(28deg);
+				}
+				&:nth-child(2) {
+					transform-origin: 50% 50%;
+					transform: translate(-2px) rotate(90deg) scaleX(0.9);
+				}
+				&:nth-child(3) {
+					transform-origin: bottom left;
+					transform: rotate(-28deg);
+				}
+			}
+		}
+	}
+}

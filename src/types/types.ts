@@ -15,6 +15,7 @@ export interface SaleInfo {
 		amount: number
 		currencyCode: string
 	}
+	saleability: string
 }
 
 export interface BookItem {

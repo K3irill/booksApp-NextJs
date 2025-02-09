@@ -1,0 +1,41 @@
+@use '@/styles/variables' as *;
+.wrapper {
+	background-color: $bg-category;
+	min-width: 416px;
+	height: fit-content;
+	padding: 45px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	left: -12%;
+}
+.categories {
+	display: flex;
+	flex-direction: column;
+	gap: 23px;
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		color: $text-grey;
+		font-size: 12px;
+		&--active {
+			font-weight: 700;
+			color: $text-light-black;
+			font-size: 16px;
+			position: relative;
+
+			&::before {
+				content: '';
+				position: absolute;
+				left: -14px;
+				top: 30%;
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background-color: $dots-active;
+			}
+		}
+	}
+}

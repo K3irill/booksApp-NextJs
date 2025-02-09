@@ -17,7 +17,7 @@ export default function MySwiper() {
 				slidesPerView={1}
 				pagination={{
 					clickable: true,
-					el: 'custom-pagination',
+					el: '.custom-pagination',
 				}}
 			>
 				{bannerSlides.map(slide => (

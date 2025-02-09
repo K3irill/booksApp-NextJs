@@ -1,0 +1,54 @@
+@use '@/styles/variables' as *;
+.card {
+	display: flex;
+	width: 424px;
+	height: 300px;
+	gap: 36px;
+	&__poster-wrapper {
+		min-width: 212px;
+		min-height: 300px;
+		box-shadow: 1px 1px 20px #64636361;
+		img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 16px 0;
+		min-width: 176px;
+	}
+	&__content-header {
+	}
+	&__authors {
+		color: $text-grey;
+		font-size: 10px;
+	}
+	&__title {
+		font-size: 16px;
+		color: $text-light-black;
+		font-weight: 700;
+	}
+	&__rates-container {
+	}
+	&__rates-stars {
+	}
+	&__fill-stars {
+	}
+	&__description {
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		hyphens: auto;
+		line-height: 13.62px;
+		color: $text-grey;
+		font-size: 10px;
+	}
+	&__price {
+		font-size: 13px;
+		color: $text-light-black;
+		font-weight: 700;
+	}
+}

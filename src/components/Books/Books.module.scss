@@ -1,0 +1,13 @@
+@use '@/styles/variables' as *;
+.content {
+	display: flex;
+}
+.books-wrapper {
+	position: relative;
+	z-index: 2;
+	margin-top: 46px;
+	margin-left: -160px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 76px 96px;
+}

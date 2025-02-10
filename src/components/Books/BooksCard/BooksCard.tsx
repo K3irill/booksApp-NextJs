@@ -1,18 +1,32 @@
 import React from 'react'
 import { BookItem } from '@/types/types'
-import cn from 'classnames'
+
 import styles from './BooksCard.module.scss'
 import Button from '@/components/buttons/Button/Button'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 interface BookCardProps {
 	props: BookItem
+	isSelected?: boolean
 }
-export const BookCard: React.FC<BookCardProps> = ({ props }) => {
+export const BookCard: React.FC<BookCardProps> = ({ props, isSelected }) => {
+	const createBookPath = (title: string) => {
+		return title.toLowerCase().split(' ').join('-')
+	}
+
 	return (
-		<div data-id={props.id} className={styles.card}>
+		<Link
+			href={`/products/${createBookPath(props.volumeInfo.title)}`}
+			data-id={props.id}
+			className={styles.card}
+		>
 			<div className={styles['card__poster-wrapper']}>
 				<img
-					src={props.volumeInfo.imageLinks?.thumbnail || 'default.src'}
+					src={
+						props.volumeInfo.imageLinks?.thumbnail ||
+						'https://d1lp72kdku3ux1.cloudfront.net/title_instance/e60/small/2405134.jpg'
+					}
 					alt={props.volumeInfo.title || 'not found'}
 				/>
 			</div>
@@ -46,8 +60,10 @@ export const BookCard: React.FC<BookCardProps> = ({ props }) => {
 					<p className={styles['card__price']}>{props.saleInfo.saleability}</p>
 				)}
 
-				<Button>BUY NOW</Button>
+				<Button selected={isSelected}>
+					{isSelected ? 'IN THE CART' : 'BUY NOW'}
+				</Button>
 			</div>
-		</div>
+		</Link>
 	)
 }

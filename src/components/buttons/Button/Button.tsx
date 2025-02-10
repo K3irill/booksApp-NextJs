@@ -7,11 +7,24 @@ interface ButtonProps {
 	action?: () => void
 	className?: string
 	children: string | React.ReactNode
+	selected?: boolean
 }
 
-export default function Button({ action, className, children }: ButtonProps) {
+export default function Button({
+	action,
+	className,
+	children,
+	selected,
+}: ButtonProps) {
 	return (
-		<button onClick={action} className={cn(styles.button, className)}>
+		<button
+			onClick={action}
+			className={cn(
+				styles.button,
+				{ [styles['button--selected']]: selected },
+				className
+			)}
+		>
 			{children}
 		</button>
 	)

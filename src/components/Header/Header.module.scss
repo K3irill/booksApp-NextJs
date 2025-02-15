@@ -79,4 +79,23 @@
 			}
 		}
 	}
+	&__cart {
+		position: relative;
+	}
+	&__goods-count {
+		position: absolute;
+		border-radius: 50%;
+		background-color: #ff353a;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 13px;
+		height: 13px;
+		bottom: -1px;
+		right: -6px;
+		span {
+			color: white;
+			font-size: 10px;
+		}
+	}
 }

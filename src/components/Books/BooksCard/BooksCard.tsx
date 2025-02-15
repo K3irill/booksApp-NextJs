@@ -1,26 +1,40 @@
 import React from 'react'
 import { BookItem } from '@/types/types'
-
 import styles from './BooksCard.module.scss'
 import Button from '@/components/buttons/Button/Button'
-import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/store/store'
+import { cartSlice } from '@/store/slices/cartsSlice'
 import { useRouter } from 'next/router'
 
 interface BookCardProps {
 	props: BookItem
-	isSelected?: boolean
 }
-export const BookCard: React.FC<BookCardProps> = ({ props, isSelected }) => {
-	const createBookPath = (title: string) => {
-		return title.toLowerCase().split(' ').join('-')
+
+export const BookCard: React.FC<BookCardProps> = ({ props }) => {
+	const isSelected = useSelector((state: RootState) =>
+		state.cart.items.some(item => item.id === props.id)
+	)
+	const dispatch = useDispatch<AppDispatch>()
+	const { items } = useSelector((state: RootState) => state.cart)
+	const router = useRouter()
+
+	const createBookPath = (id: string) => id.split(' ').join('-')
+
+	const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation()
+		if (props) {
+			dispatch(cartSlice.actions.toggleItemToCart(props))
+			console.log('Added to cart', items)
+		}
+	}
+
+	const handleCardClick = () => {
+		router.push(`/products/${createBookPath(props.id)}`)
 	}
 
 	return (
-		<Link
-			href={`/products/${createBookPath(props.volumeInfo.title)}`}
-			data-id={props.id}
-			className={styles.card}
-		>
+		<div className={styles.card} onClick={handleCardClick}>
 			<div className={styles['card__poster-wrapper']}>
 				<img
 					src={
@@ -33,16 +47,16 @@ export const BookCard: React.FC<BookCardProps> = ({ props, isSelected }) => {
 			<div className={styles['card__content']}>
 				<div className={styles['card__content-header']}>
 					<p className={styles['card__authors']}>
-						<span>
-							{props.volumeInfo.authors?.map(author => author).join(', ')}
-						</span>
+						<span>{props.volumeInfo.authors?.join(', ')}</span>
 					</p>
 					<p className={styles['card__title']}>{props.volumeInfo.title}</p>
 					{props.volumeInfo.averageRating && (
 						<div className={styles['card__rates-container']}>
 							<div className={styles['card__rates-stars']}>
 								<div
-									style={{ width: `${props.volumeInfo.averageRating / 5}` }}
+									style={{
+										width: `${(props.volumeInfo.averageRating / 5) * 100}%`,
+									}}
 									className={styles['card__fill-stars']}
 								></div>
 							</div>
@@ -52,18 +66,14 @@ export const BookCard: React.FC<BookCardProps> = ({ props, isSelected }) => {
 				<p className={styles['card__description']}>
 					{props.volumeInfo.description}
 				</p>
-				{props.saleInfo.retailPrice ? (
-					<p className={styles['card__price']}>
-						{props.saleInfo.retailPrice?.amount}
-					</p>
-				) : (
-					<p className={styles['card__price']}>{props.saleInfo.saleability}</p>
-				)}
+				<p className={styles['card__price']}>
+					{props.saleInfo.retailPrice?.amount || props.saleInfo.saleability}
+				</p>
 
-				<Button selected={isSelected}>
+				<Button action={handleAddToCart} selected={isSelected}>
 					{isSelected ? 'IN THE CART' : 'BUY NOW'}
 				</Button>
 			</div>
-		</Link>
+		</div>
 	)
 }

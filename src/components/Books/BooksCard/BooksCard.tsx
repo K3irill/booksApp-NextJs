@@ -4,8 +4,8 @@ import styles from './BooksCard.module.scss'
 import Button from '@/components/buttons/Button/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/store/store'
-import { cartSlice } from '@/store/slices/cartsSlice'
 import { useRouter } from 'next/router'
+import { addProductToCart } from '@/utils/addProductToCart'
 
 interface BookCardProps {
 	props: BookItem
@@ -16,18 +16,9 @@ export const BookCard: React.FC<BookCardProps> = ({ props }) => {
 		state.cart.items.some(item => item.id === props.id)
 	)
 	const dispatch = useDispatch<AppDispatch>()
-	const { items } = useSelector((state: RootState) => state.cart)
 	const router = useRouter()
 
 	const createBookPath = (id: string) => id.split(' ').join('-')
-
-	const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.stopPropagation()
-		if (props) {
-			dispatch(cartSlice.actions.toggleItemToCart(props))
-			console.log('Added to cart', items)
-		}
-	}
 
 	const handleCardClick = () => {
 		router.push(`/products/${createBookPath(props.id)}`)
@@ -70,7 +61,10 @@ export const BookCard: React.FC<BookCardProps> = ({ props }) => {
 					{props.saleInfo.retailPrice?.amount || props.saleInfo.saleability}
 				</p>
 
-				<Button action={handleAddToCart} selected={isSelected}>
+				<Button
+					action={event => addProductToCart(event, props, dispatch)}
+					selected={isSelected}
+				>
 					{isSelected ? 'IN THE CART' : 'BUY NOW'}
 				</Button>
 			</div>

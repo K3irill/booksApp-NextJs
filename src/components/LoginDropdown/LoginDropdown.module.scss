@@ -1,0 +1,13 @@
+.login {
+	position: relative;
+	&__menu {
+		position: absolute;
+		top: 25px;
+		right: -92px;
+		width: 195px;
+		background-color: #fff;
+		text-align: center;
+		box-shadow: 0px 4px 4px 0px #00000040;
+		z-index: 100;
+	}
+}

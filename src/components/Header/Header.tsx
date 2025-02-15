@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import IconButton from '../buttons/IconButton/IconButton'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import LoginDropdown from '../LoginDropdown/LoginDropdown'
 
 export default function Header() {
 	const router = useRouter()
@@ -53,12 +54,7 @@ export default function Header() {
 					</nav>
 
 					<div className={cn(styles['header__activity'])}>
-						<IconButton
-							src='/icons/user.svg'
-							alt='user'
-							width={12}
-							height={15}
-						/>
+						<LoginDropdown />
 						<Link href={'/cart'} className={cn(styles['header__cart'])}>
 							<IconButton
 								src='/icons/bag.svg'

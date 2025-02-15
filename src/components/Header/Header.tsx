@@ -5,12 +5,14 @@ import cn from 'classnames'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import IconButton from '../buttons/IconButton/IconButton'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 export default function Header() {
 	const router = useRouter()
 	const pathname = router.pathname
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
-
+	const { items } = useSelector((state: RootState) => state.cart)
 	const navContent = [
 		{ id: 0, title: 'Books', path: '/books' },
 		{ id: 1, title: 'Audiobooks', path: '/audiobooks' },
@@ -28,7 +30,6 @@ export default function Header() {
 				<div className={cn(styles.header__content)}>
 					<div className={cn(styles.header__logo)}>Bookshop</div>
 
-					{/* Навигация */}
 					<nav
 						className={cn(styles.header__nav, {
 							[styles['header__nav--open']]: isMenuOpen,
@@ -58,7 +59,17 @@ export default function Header() {
 							width={12}
 							height={15}
 						/>
-						<IconButton src='/icons/bag.svg' alt='bag' width={12} height={15} />
+						<Link href={'/cart'} className={cn(styles['header__cart'])}>
+							<IconButton
+								src='/icons/bag.svg'
+								alt='bag'
+								width={12}
+								height={15}
+							/>
+							<div className={cn(styles['header__goods-count'])}>
+								<span>{items.length}</span>
+							</div>
+						</Link>
 					</div>
 
 					<div

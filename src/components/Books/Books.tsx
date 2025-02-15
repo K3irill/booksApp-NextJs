@@ -13,7 +13,6 @@ import Button from '../buttons/Button/Button'
 import { SkeletonItem } from '../SkeletonItem/SkeletonItem'
 
 export default function Books() {
-	const isSelected = true
 	const dispatch = useDispatch<AppDispatch>()
 	const [retry, setRetry] = useState(false)
 	const { books, error, loading } = useSelector(
@@ -26,7 +25,7 @@ export default function Books() {
 	useEffect(() => {
 		if (activeCategory) {
 			dispatch(
-				getBooks({ category: activeCategory, startIndex: 0, maxResults: 10 })
+				getBooks({ category: activeCategory, startIndex: 0, maxResults: 6 })
 			)
 		}
 	}, [dispatch, retry, activeCategory])
@@ -58,9 +57,7 @@ export default function Books() {
 			{!loading ? (
 				<div className={styles['books-wrapper']}>
 					{books && books.length > 0 ? (
-						books.map(book => (
-							<BookCard isSelected={isSelected} key={book.id} props={book} />
-						))
+						books.map(book => <BookCard key={book.id} props={book} />)
 					) : (
 						<>
 							<Button action={() => setRetry(true)}>Retry</Button>

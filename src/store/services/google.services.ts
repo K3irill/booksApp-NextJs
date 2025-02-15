@@ -7,6 +7,10 @@ type FetchBooksParams = {
 	maxResults: number
 }
 
+type FetchBookByIdParams = {
+	bookId?: number
+	BOOK_TITLE?: string
+}
 const KEY = process.env.NEXT_PUBLIC_API_KEY
 
 export const getBooks = createAsyncThunk<
@@ -27,3 +31,24 @@ export const getBooks = createAsyncThunk<
 		}
 	}
 )
+
+export const getBookById = createAsyncThunk<
+	BookItem,
+	FetchBookByIdParams,
+	{ rejectValue: string }
+>('books/getBookById', async ({ bookId }, { rejectWithValue }) => {
+	try {
+		const response = await instance.get<GoogleApiBooks>(
+			`books/v1/volumes/${bookId}`
+		)
+
+		if (!response.data) {
+			throw new Error('Пустой ответ от API')
+		}
+
+		return response.data
+	} catch (error) {
+		console.error('Ошибка при получении данных:', error)
+		return rejectWithValue('Не удалось загрузить информацию о книге')
+	}
+})

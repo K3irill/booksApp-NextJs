@@ -29,7 +29,9 @@ export default function Header() {
 		<header className={styles.header}>
 			<div className={cn(styles.header__container, 'container')}>
 				<div className={cn(styles.header__content)}>
-					<div className={cn(styles.header__logo)}>Bookshop</div>
+					<div className={cn(styles.header__logo)}>
+						<Link href={'/'}>Bookshop</Link>{' '}
+					</div>
 
 					<nav
 						className={cn(styles.header__nav, {
@@ -62,9 +64,11 @@ export default function Header() {
 								width={12}
 								height={15}
 							/>
-							<div className={cn(styles['header__goods-count'])}>
-								<span>{items.length}</span>
-							</div>
+							{items.length > 0 && (
+								<div className={cn(styles['header__goods-count'])}>
+									<span>{items.length}</span>
+								</div>
+							)}
 						</Link>
 					</div>
 

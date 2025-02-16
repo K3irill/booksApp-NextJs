@@ -9,7 +9,7 @@ export default function CartPage() {
 		<MainLayout>
 			<div className={styles.cart}>
 				<div className={(styles.cart__container, 'container')}>
-					<div className={styles.cart__content}>cart</div>
+					<div className={styles.cart__content}></div>
 				</div>
 			</div>
 		</MainLayout>

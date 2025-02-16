@@ -1,13 +1,43 @@
+@use '../../styles/variables.scss' as *;
 .login {
 	position: relative;
 	&__menu {
+		padding: 17px 18px;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		justify-content: center;
 		position: absolute;
 		top: 25px;
-		right: -92px;
-		width: 195px;
+		right: -98px;
+		width: 214px;
 		background-color: #fff;
 		text-align: center;
 		box-shadow: 0px 4px 4px 0px #00000040;
 		z-index: 100;
+		gap: 15px;
+	}
+	&__title {
+		font-weight: 700;
+	}
+	&__label {
+		font-size: 12px;
+		font-weight: 700;
+		justify-self: start;
+	}
+	& input {
+		margin-top: 9px;
+		padding: 10px 9px;
+		border: 1px solid $purple;
+		color: $purple;
+		&::placeholder {
+			color: $purple;
+		}
+	}
+	&__btn {
+		height: 32px;
+		color: #fff;
+		background-color: $dots-active;
+		font-weight: 700;
 	}
 }

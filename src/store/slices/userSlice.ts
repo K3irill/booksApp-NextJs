@@ -2,15 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserState {
 	email: string | null
+	token: string | null
 }
 
 const loadCartFromLocalStorage = (): UserState => {
 	try {
 		const storedUser = localStorage.getItem('user')
-		return storedUser ? JSON.parse(storedUser) : { email: null }
+		return storedUser ? JSON.parse(storedUser) : { email: null, token: null }
 	} catch (error) {
 		console.error('Ошибка загрузки корзины:', error)
-		return { email: null }
+		return { email: null, token: null }
 	}
 }
 
@@ -22,11 +23,13 @@ export const userSlice = createSlice({
 	reducers: {
 		login(state, action: PayloadAction<UserState>) {
 			state.email = action.payload.email
+			state.token = action.payload.token
 			localStorage.setItem('user', JSON.stringify(state))
 		},
 		logout(state) {
 			state.email = null
-			localStorage.setItem('user', JSON.stringify(state))
+			state.token = null
+			localStorage.removeItem('user')
 		},
 	},
 })

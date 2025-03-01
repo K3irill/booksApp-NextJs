@@ -4,7 +4,7 @@ import { BookItem } from '@/types/types'
 
 export const addProductToCart = (
 	e: React.MouseEvent<HTMLButtonElement>,
-	props: BookItem,
+	props: BookItem | null,
 	dispatch: AppDispatch
 ) => {
 	e.stopPropagation()

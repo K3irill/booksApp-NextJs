@@ -7,7 +7,7 @@ import Button from '@/components/buttons/Button/Button'
 import { addProductToCart } from '@/utils/addProductToCart'
 
 interface ProductProps {
-	bookId?: number
+	bookId?: string
 }
 
 export default function Product({ bookId }: ProductProps) {

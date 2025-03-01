@@ -30,7 +30,11 @@ export const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		toggleItemToCart(state, action: PayloadAction<BookItem>) {
-			const newItem = { ...action.payload, count: 1, shippingStatus: 'pending' }
+			const newItem = {
+				...action.payload,
+				count: 1,
+				shippingStatus: 'pending',
+			} as MixedCartItem
 			const existingItem = state.items.find(
 				item => 'id' in item && item.id === newItem.id
 			)

@@ -31,10 +31,9 @@ export const bookInfoSlice = createSlice({
 					state.bookInfo = action.payload
 				}
 			)
-			.addCase(getBookById.rejected, (state, action: PayloadAction<string>) => {
+			.addCase(getBookById.rejected, state => {
 				state.loading = false
-				state.error =
-					action.payload || action.error.message || 'Ошибка загрузки книги'
+				state.error = 'Ошибка загрузки книги'
 			})
 	},
 })

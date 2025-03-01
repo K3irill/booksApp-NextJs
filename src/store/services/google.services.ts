@@ -8,7 +8,7 @@ type FetchBooksParams = {
 }
 
 type FetchBookByIdParams = {
-	bookId?: number
+	bookId?: string
 	BOOK_TITLE?: string
 }
 const KEY = process.env.NEXT_PUBLIC_API_KEY
@@ -38,7 +38,7 @@ export const getBookById = createAsyncThunk<
 	{ rejectValue: string }
 >('books/getBookById', async ({ bookId }, { rejectWithValue }) => {
 	try {
-		const response = await instance.get<GoogleApiBooks>(
+		const response = await instance.get<{ id: string } & BookItem>(
 			`books/v1/volumes/${bookId}`
 		)
 

@@ -4,7 +4,7 @@ import styles from './Button.module.scss'
 import cn from 'classnames'
 
 interface ButtonProps {
-	action?: (e: React.MouseEvent) => void
+	action?: (e: any) => void
 	className?: string
 	children: string | React.ReactNode
 	selected?: boolean

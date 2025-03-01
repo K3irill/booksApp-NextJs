@@ -15,25 +15,48 @@ const schema = yup
 		password: yup.string().min(6).required(),
 	})
 	.required()
+
 const LoginDropdown = () => {
 	const router = useRouter()
 	const dispatch = useDispatch<AppDispatch>()
-	const { email } = useSelector((state: RootState) => state.user)
+	const { email, token } = useSelector((state: RootState) => state.user)
 	const [isOpen, setIsOpen] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [errorMessage, setErrorMessage] = useState('')
+
 	const {
 		register,
 		handleSubmit,
-
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
 	})
-	const onSubmit = data => {
-		if (email) {
-			dispatch(userSlice.actions.logout())
-		} else {
-			dispatch(userSlice.actions.login({ email: data.email }))
-			router.push('/profile')
+
+	const onSubmit = async (data: { email: string; password: string }) => {
+		setLoading(true)
+		setErrorMessage('')
+
+		try {
+			const response = await fetch('/api/auth', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data),
+			})
+
+			const result = await response.json()
+
+			if (response.ok) {
+				dispatch(
+					userSlice.actions.login({ email: data.email, token: result.token })
+				)
+				router.push('/profile')
+			} else {
+				setErrorMessage(result.message)
+			}
+		} catch (error) {
+			setErrorMessage('Server error. Please try again.')
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -59,15 +82,7 @@ const LoginDropdown = () => {
 									placeholder='Enter email'
 									{...register('email')}
 								/>
-								<p
-									style={{
-										color: 'red',
-										fontSize: '10px',
-										justifySelf: 'start',
-									}}
-								>
-									{errors.email?.message}
-								</p>
+								<p className={styles.error}>{errors.email?.message}</p>
 							</label>
 							<label>
 								<p className={styles.login__label}>Password</p>
@@ -76,21 +91,21 @@ const LoginDropdown = () => {
 									placeholder='Enter password'
 									{...register('password')}
 								/>
-								<p
-									style={{
-										color: 'red',
-										fontSize: '10px',
-										justifySelf: 'start',
-									}}
-								>
-									{errors.password?.message}
-								</p>
+								<p className={styles.error}>{errors.password?.message}</p>
 							</label>
 						</>
 					)}
 
-					<button className={styles.login__btn}>
-						{email ? 'Logout' : 'Login'}
+					{errorMessage && <p className={styles.error}>{errorMessage}</p>}
+
+					<button
+						className={styles.login__btn}
+						disabled={loading}
+						onClick={
+							token ? () => dispatch(userSlice.actions.logout()) : () => {}
+						}
+					>
+						{loading ? 'Loading...' : token ? 'Logout' : 'Login'}
 					</button>
 				</form>
 			)}

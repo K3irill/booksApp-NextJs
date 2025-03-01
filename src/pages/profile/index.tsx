@@ -10,8 +10,10 @@ export default function ProfilePage() {
 			<div className={styles.profile}>
 				<div className={(styles.profile__container, 'container')}>
 					<div className={styles.profile__content}>
-						<h2 className={styles.profile__title}>Profile</h2>
-						<p className={styles.profile__email}>{email}</p>
+						<h2 className={styles.profile__title}>User profile</h2>
+						<p className={styles.profile__email}>
+							{email ? email : 'You are not authorized'}
+						</p>
 					</div>
 				</div>
 			</div>
